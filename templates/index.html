@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% block title %}ShopZone – Home{% endblock %}
+{% block content %}
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-50 py-5">
+      <div class="col-lg-6 text-white">
+        <h1 class="display-4 fw-bold mb-3">Shop the Best,<br><span class="text-warning">Get the Rest.</span></h1>
+        <p class="lead mb-4 opacity-75">Discover thousands of products across all categories. Fast shipping, easy returns.</p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="{{ url_for('products') }}" class="btn btn-warning btn-lg fw-bold px-4">
+            <i class="fas fa-shopping-bag me-2"></i>Shop Now
+          </a>
+          {% if not session.get('user_id') %}
+          <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-lg px-4">Join Free</a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <div class="hero-stats d-flex justify-content-center gap-4">
+          <div class="stat-card text-center">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Products</div>
+          </div>
+          <div class="stat-card text-center">
+            <div class="stat-number">10k+</div>
+            <div class="stat-label">Customers</div>
+          </div>
+          <div class="stat-card text-center">
+            <div class="stat-number">5★</div>
+            <div class="stat-label">Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <h2 class="section-title text-center mb-4">Browse Categories</h2>
+    <div class="row g-3 justify-content-center">
+      {% for cat in categories %}
+      <div class="col-6 col-md-4 col-lg-2">
+        <a href="{{ url_for('products', category=cat.id) }}" class="category-card text-decoration-none">
+          <div class="card text-center border-0 shadow-sm h-100 py-3 category-hover">
+            <i class="fas fa-tag fa-2x mb-2 text-primary"></i>
+            <div class="fw-semibold text-dark small">{{ cat.name }}</div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+      <div class="col-6 col-md-4 col-lg-2">
+        <a href="{{ url_for('products') }}" class="text-decoration-none">
+          <div class="card text-center border-0 shadow-sm h-100 py-3 category-hover">
+            <i class="fas fa-th fa-2x mb-2 text-secondary"></i>
+            <div class="fw-semibold text-dark small">All Products</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title mb-0">Featured Products</h2>
+      <a href="{{ url_for('products') }}" class="btn btn-outline-primary btn-sm">View All <i class="fas fa-arrow-right ms-1"></i></a>
+    </div>
+    <div class="row g-4">
+      {% for product in products %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card product-card h-100 border-0 shadow-sm">
+          <div class="product-img-wrapper">
+            <img src="{{ product.image_url }}" class="card-img-top product-img" alt="{{ product.name }}">
+            <div class="product-overlay">
+              <a href="{{ url_for('product_detail', pid=product.id) }}" class="btn btn-light btn-sm">
+                <i class="fas fa-eye me-1"></i>Quick View
+              </a>
+            </div>
+          </div>
+          <div class="card-body d-flex flex-column">
+            {% if product.category %}
+            <span class="badge bg-light text-muted mb-1 small">{{ product.category.name }}</span>
+            {% endif %}
+            <h6 class="card-title fw-bold">{{ product.name }}</h6>
+            <p class="card-text text-muted small flex-grow-1">{{ product.description[:80] }}...</p>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <span class="product-price fw-bold">${{ "%.2f"|format(product.price) }}</span>
+              <span class="badge bg-success-subtle text-success small">{{ product.stock }} left</span>
+            </div>
+          </div>
+          <div class="card-footer border-0 bg-transparent pt-0">
+            <form action="{{ url_for('add_to_cart', pid=product.id) }}" method="POST">
+              <input type="hidden" name="quantity" value="1">
+              <button class="btn btn-primary w-100 btn-sm fw-bold">
+                <i class="fas fa-cart-plus me-1"></i>Add to Cart
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES BANNER -->
+<section class="py-5 bg-primary text-white">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-md-3">
+        <i class="fas fa-shipping-fast fa-2x mb-2"></i>
+        <h6 class="fw-bold">Free Shipping</h6>
+        <small class="opacity-75">On orders over $50</small>
+      </div>
+      <div class="col-md-3">
+        <i class="fas fa-undo fa-2x mb-2"></i>
+        <h6 class="fw-bold">Easy Returns</h6>
+        <small class="opacity-75">30-day return policy</small>
+      </div>
+      <div class="col-md-3">
+        <i class="fas fa-shield-alt fa-2x mb-2"></i>
+        <h6 class="fw-bold">Secure Payment</h6>
+        <small class="opacity-75">100% secure checkout</small>
+      </div>
+      <div class="col-md-3">
+        <i class="fas fa-headset fa-2x mb-2"></i>
+        <h6 class="fw-bold">24/7 Support</h6>
+        <small class="opacity-75">Always here to help</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

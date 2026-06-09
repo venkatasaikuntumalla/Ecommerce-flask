@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Manage Products – Admin{% endblock %}
+{% block content %}
+<div class="container-fluid py-4 px-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold"><i class="fas fa-box me-2 text-primary"></i>Product Management</h3>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary btn-sm">← Dashboard</a>
+  </div>
+
+  <!-- Add Product Form -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white fw-bold border-0 py-3">
+      <i class="fas fa-plus me-2 text-success"></i>Add New Product
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Product Name</label>
+            <input type="text" name="name" class="form-control" required placeholder="e.g. Wireless Headphones">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Price ($)</label>
+            <input type="number" name="price" class="form-control" step="0.01" min="0" required placeholder="29.99">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Stock</label>
+            <input type="number" name="stock" class="form-control" min="0" required placeholder="100">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Category</label>
+            <select name="category_id" class="form-select">
+              <option value="">No Category</option>
+              {% for cat in categories %}
+              <option value="{{ cat.id }}">{{ cat.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Image URL</label>
+            <input type="url" name="image_url" class="form-control" placeholder="https://...">
+          </div>
+          <div class="col-12">
+            <label class="form-label fw-semibold">Description</label>
+            <textarea name="description" class="form-control" rows="2" required placeholder="Product description..."></textarea>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-success fw-bold px-4"><i class="fas fa-plus me-2"></i>Add Product</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white fw-bold border-0 py-3">
+      <i class="fas fa-list me-2 text-primary"></i>All Products ({{ products|length }})
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+          <tr>
+            <td><img src="{{ p.image_url }}" width="50" height="40" style="object-fit:cover;border-radius:6px"></td>
+            <td class="fw-semibold">{{ p.name }}</td>
+            <td><span class="badge bg-light text-dark">{{ p.category.name if p.category else 'N/A' }}</span></td>
+            <td class="fw-bold text-primary">${{ "%.2f"|format(p.price) }}</td>
+            <td>
+              <span class="badge {% if p.stock > 10 %}bg-success{% elif p.stock > 0 %}bg-warning text-dark{% else %}bg-danger{% endif %}">
+                {{ p.stock }}
+              </span>
+            </td>
+            <td>
+              <a href="{{ url_for('delete_product', pid=p.id) }}"
+                 onclick="return confirm('Delete {{ p.name }}?')"
+                 class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

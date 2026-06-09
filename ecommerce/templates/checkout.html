@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Checkout – ShopZone{% endblock %}
+{% block content %}
+<div class="container py-5" style="max-width:700px">
+  <h2 class="fw-bold mb-4"><i class="fas fa-lock me-2 text-primary"></i>Checkout</h2>
+  <div class="row g-4">
+    <div class="col-md-7">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-4">Shipping Address</h5>
+          <form method="POST">
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Name</label>
+              <input type="text" class="form-control" value="{{ session.get('user_name','') }}" readonly>
+            </div>
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Delivery Address</label>
+              <textarea name="address" class="form-control" rows="4" placeholder="Street, City, State, ZIP, Country" required></textarea>
+            </div>
+            <h5 class="fw-bold mb-3">Payment (Demo)</h5>
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Card Number</label>
+              <input type="text" class="form-control" placeholder="4242 4242 4242 4242" disabled>
+            </div>
+            <div class="row">
+              <div class="col"><input type="text" class="form-control" placeholder="MM/YY" disabled></div>
+              <div class="col"><input type="text" class="form-control" placeholder="CVV" disabled></div>
+            </div>
+            <p class="text-muted small mt-2"><i class="fas fa-info-circle me-1"></i>This is a demo. No real payment is processed.</p>
+            <button class="btn btn-success w-100 fw-bold btn-lg mt-3">
+              <i class="fas fa-check me-2"></i>Place Order – ${{ "%.2f"|format(total) }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h6 class="fw-bold mb-3">Order Items</h6>
+          {% for pid, item in cart.items() %}
+          <div class="d-flex justify-content-between mb-2">
+            <span class="small">{{ item.name }} × {{ item.quantity }}</span>
+            <span class="small fw-bold">${{ "%.2f"|format(item.price * item.quantity) }}</span>
+          </div>
+          {% endfor %}
+          <hr>
+          <div class="d-flex justify-content-between fw-bold text-primary">
+            <span>Total</span><span>${{ "%.2f"|format(total) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

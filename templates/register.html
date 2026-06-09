@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Register – ShopZone{% endblock %}
+{% block content %}
+<div class="container py-5 d-flex justify-content-center">
+  <div class="auth-card card border-0 shadow-lg p-5" style="width:100%;max-width:450px">
+    <div class="text-center mb-4">
+      <i class="fas fa-user-plus fa-3x text-primary mb-2"></i>
+      <h3 class="fw-bold">Create Account</h3>
+      <p class="text-muted">Join thousands of happy shoppers</p>
+    </div>
+    <form method="POST">
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Full Name</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-user text-muted"></i></span>
+          <input type="text" name="name" class="form-control" placeholder="John Doe" required>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-envelope text-muted"></i></span>
+          <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-lock text-muted"></i></span>
+          <input type="password" name="password" class="form-control" placeholder="Min. 6 characters" minlength="6" required>
+        </div>
+      </div>
+      <button class="btn btn-primary w-100 fw-bold py-2 btn-lg">Create Account</button>
+    </form>
+    <p class="text-center text-muted mt-3">Already have an account? <a href="{{ url_for('login') }}" class="fw-bold">Login</a></p>
+  </div>
+</div>
+{% endblock %}

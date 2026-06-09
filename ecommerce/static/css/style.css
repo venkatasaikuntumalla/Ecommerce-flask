@@ -1,0 +1,136 @@
+/* ── Base ───────────────────────────── */
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f8f9fa; }
+
+/* ── Navbar ─────────────────────────── */
+#main-nav {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  padding: 12px 0;
+}
+.search-input { border-radius: 25px; border: none; padding-left: 16px; }
+.search-input:focus { box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
+
+/* ── Hero ────────────────────────────── */
+.hero-section {
+  background: linear-gradient(135deg, #1a237e 0%, #283593 60%, #303f9f 100%);
+  padding: 60px 0;
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+}
+.stat-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px 24px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.stat-number { font-size: 1.8rem; font-weight: 800; color: #fff; }
+.stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.7); }
+
+/* ── Section Title ───────────────────── */
+.section-title {
+  font-weight: 800;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: #1a237e;
+  border-radius: 2px;
+}
+
+/* ── Product Cards ───────────────────── */
+.product-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.12) !important;
+}
+.product-img-wrapper { position: relative; overflow: hidden; height: 200px; }
+.product-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.product-card:hover .product-img { transform: scale(1.05); }
+.product-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.product-card:hover .product-overlay { opacity: 1; }
+.product-price { font-size: 1.1rem; color: #1a237e; }
+
+/* ── Category Cards ──────────────────── */
+.category-hover { transition: all 0.2s; }
+.category-hover:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1) !important; background: #1a237e !important; }
+.category-hover:hover i, .category-hover:hover div { color: white !important; }
+
+/* ── Auth Cards ──────────────────────── */
+.auth-card { border-radius: 16px; }
+.avatar-circle {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, #1a237e, #283593);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Admin Stats ─────────────────────── */
+.stat-card-admin { border-radius: 12px !important; transition: transform 0.2s; }
+.stat-card-admin:hover { transform: translateY(-3px); }
+
+/* ── Footer ──────────────────────────── */
+.footer {
+  background: #1a1a2e;
+  color: #aaa;
+}
+.footer-link { color: #aaa; text-decoration: none; }
+.footer-link:hover { color: #fff; }
+.footer-hr { border-color: rgba(255,255,255,0.1); }
+
+/* ── Alerts ──────────────────────────── */
+.alert { border: none; border-radius: 10px; }
+
+/* ── Cards global ────────────────────── */
+.card { border-radius: 12px !important; }
+.btn { border-radius: 8px; }
+.form-control, .form-select { border-radius: 8px; }
+
+/* ── Success page ────────────────────── */
+.success-icon { animation: pop 0.5s ease; }
+@keyframes pop {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ── Responsive ──────────────────────── */
+@media (max-width: 768px) {
+  .hero-section { padding: 40px 0; }
+  .stat-card { padding: 12px 16px; }
+  .stat-number { font-size: 1.4rem; }
+}
